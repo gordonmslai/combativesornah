@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: web: gunicorn ornah_app.wsgi
