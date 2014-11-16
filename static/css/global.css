@@ -51,6 +51,9 @@ h1, h3 {
   font-style: italic;
   width: 100%;
 }
+#me {
+  font-size: 50%;
+}
 
 #nah, #yes_str {
   margin-top: 10px;

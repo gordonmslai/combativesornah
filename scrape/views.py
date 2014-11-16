@@ -95,11 +95,6 @@ def index(request, _day = '0', ref = 0):
     SortedBlocks = timeblock.BlockList(Blocks)
     SortedBlocks.finalize(today, other_classes)
     data["SortedBlocks"] = SortedBlocks
-    for b in SortedBlocks.classes:
-        print(b.name)
-        print(b.start.time())
-        print(b.end.time())
-
 
     curr = SortedBlocks.get_current()
     data["curr"] = curr
