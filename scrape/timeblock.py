@@ -15,7 +15,7 @@ class TimeBlock:
             self.reserved = True
         self.rsf_closed = False
         self.name = classname
-        self.now = datetime.datetime.today()
+        self.now = datetime.datetime.today() - datetime.timedelta(hours = 8)
     # Returns the duration of this TimeBlock in minutes
     def duration(self):
         d = self.end - self.start

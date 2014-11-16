@@ -19,6 +19,8 @@ def index(request, _day = '0', ref = 0):
     data = {}
     
     today = datetime.datetime.today() - datetime.timedelta(hours = 8)
+
+    print(today.time())
     
     if int(_day) != 0:
         today = today + datetime.timedelta(days = int(_day))
