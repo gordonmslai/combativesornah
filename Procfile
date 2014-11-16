@@ -1,1 +1,1 @@
-web: web: gunicorn ornah_app.wsgi
+web: python quak/manage.py runserver "0.0.0.0:$PORT"
