@@ -174,7 +174,13 @@ class BlockList:
         rsf_tom = others.Others([rsfhours], day + datetime.timedelta(days = 1))
         rsf_tom = rsf_tom.create_block(rsfhours)
         return TimeBlock(rsf.end, rsf_tom.start, "-- RSF CLOSED --")
-
+    
+    #Add other classes to Block Tree
+    def others_blocks(self, day, class_list):
+        _others = others.Others(class_list, day)
+        others_list = _others.block_list()
+        return others_list
+    
     def get_free_blocks(self):
         L = self.classes
         blocks = []
@@ -184,11 +190,7 @@ class BlockList:
                     blocks.append(TimeBlock(item.end, L[i+1].start, "No reservation"))
         return blocks
     
-    #Add other classes to Block Tree
-    def others_blocks(self, day, class_list):
-        _others = others.Others(class_list, day)
-        others_list = _others.block_list()
-        return others_list
+
 
     def finalize(self, day, _others):
         rsf = others.Others([rsfhours], day)
@@ -196,7 +198,7 @@ class BlockList:
         for b in self.start_blocks(rsf, day):
             self.add(b)
         self.add(self.closed_block(rsf, day))
-        for b in self.get_free_blocks():
-            self.add(b)
         for b in self.others_blocks(day, _others):
+            self.add(b)
+        for b in self.get_free_blocks():
             self.add(b)
