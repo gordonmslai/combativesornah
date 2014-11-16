@@ -1,0 +1,44 @@
+{% load staticfiles %}
+doctype html
+html(lang='en')
+    head
+        title Combatives Or Nah?
+        link(rel='stylesheet', href='{% static "css/global.css" %}', type='text/css')
+        script.
+            function display_c() {
+                var refresh=500;
+                mytime=setTimeout('display_ct()', refresh);
+            }
+
+            function display_ct() {
+                var strcount;
+                var x = ". ";
+                var e = document.getElementById("load");
+                if (e.innerHTML != ". . . ") {
+                    e.innerHTML = e.innerHTML + x;
+                }
+                else {
+                    e.innerHTML = "";
+                }
+                e.style.fontSize = "300%";
+                tt=display_c();
+            }
+            
+
+            function time_stuff() {
+                display_ct();
+
+            }
+
+    body(onload = "time_stuff();")
+        #container
+            center
+                h1 Sending Gordon (2CHAINZNO)Lai over to check if the Combatives Room is open...please wait. 
+                br
+                br
+                h1 It might take a while.
+                #load
+
+    meta(http-equiv="refresh", content="0;URL=/index/")
+
+

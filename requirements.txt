@@ -1,0 +1,8 @@
+Django==1.7.1
+django-sslserver==0.14
+httplib2==0.9
+lxml==3.4.0
+pyjade==3.0.0
+python-dateutil==2.2
+requests==2.4.3
+rsa==3.1.4

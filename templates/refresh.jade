@@ -1,0 +1,44 @@
+doctype html
+html(lang='en')
+    head
+        title Combatives Or Nah?
+    body(bgcolor="#E6E6FA" style='margin-top:10px;margin-left:150px;margin-right:150px;')
+        h3 Combatives Or Nah?
+        center
+            br
+            br
+            | Schedule is currently taking longer than normal to load. 
+            br
+            h3 Refreshing...
+            p#demo
+            p#loading(style = 'display:none') LOADING 
+            script(type='text/javascript').
+                function ref() {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/index2/',
+                        beforeSend: function() {
+                            $('#loading').show();
+                        },
+                        success: function(data) {
+                            ...redirect...
+                        },
+                        cache: false
+                    });
+                }
+                function blah(a,b) {
+                    document.getElementById("myDiv").innerHTML=a*b;
+                    return a*b;
+                }
+
+            a(href = "/index2/")
+                p Refresh
+            
+            form(name="input", action="blah();") {% csrf_token %}
+                input.btn(type="submit", value="Blah")
+
+            button(type="button", onclick="ref();") Refresh
+            #myDiv
+
+
+
