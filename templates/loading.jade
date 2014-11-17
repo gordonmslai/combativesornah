@@ -21,6 +21,9 @@ html(lang='en')
                     e.innerHTML = "";
                 }
                 e.style.fontSize = "300%";
+                var a = new Date();
+                var x = a.toDateString();
+                document.getElementById("ct").innerHTML = "<h3>" + x;
                 tt=display_c();
             }
             
@@ -31,14 +34,20 @@ html(lang='en')
             }
 
     body(onload = "time_stuff();")
-        #container2
-            center
+        #bg
+            img(src='{% static "gordon.jpg" %}', alt = '')
+        #container
+            #backcont2
+            spac#ct
+            #title
+                h3 Combatives Or Nah?
+            #ornah2
                 h1 Sending Gordon (2CHAINZNO)Lai over to check if the Combatives Room is open...please wait. 
                 br
                 br
                 h1 It might take a while.
                 #load
 
-    meta(http-equiv="refresh", content="2;URL=/index/")
+    meta(http-equiv="refresh", content="0;URL=/index/")
 
 
