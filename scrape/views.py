@@ -54,7 +54,7 @@ def index(request, _day = '0', ref = 0):
             return fail(request)
         else:
             print("retrying...")
-            return index2(request, ref + 1)
+            return fail1(request)
 
     P.move_to(P.today_str())
     P.count = 0
