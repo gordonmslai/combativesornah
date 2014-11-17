@@ -18,23 +18,52 @@ def index(request, _day = '0', ref = 0):
     context = RequestContext(request)
     data = {}
     
-    today = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
 
+    today = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
     
     if int(_day) != 0:
         today = today + datetime.timedelta(days = int(_day))
-    
-    url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
 
-    tree = html.parse(url)
-    root = tree.getroot()
+    f = open("string.db")
+    P = OrNahParser(f.read(), today)
 
-    for child in root:
-        if child.tag == "body":
-            pointer = child
-            break
+    print(today.weekday())
+    if today.weekday() == 6:
+        if f.readline() != P.today_str():     
+            url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
+            
+            tree = html.parse(url)
+            root = tree.getroot()
 
-    data_string = root.text_content()
+            for child in root:
+                if child.tag == "body":
+                    pointer = child
+                    break
+
+            data_string = root.text_content()
+            P = OrNahParser(data_string, today)
+            try:
+                assert P.str.count(P.today_str()) == 1
+            except AssertionError:
+                if ref > 2:
+                    print("failed.")
+                    return fail(request)
+                else:
+                    print("retrying...")
+                    return fail1(request)            
+            f = open("string.db", "w")
+            f.write(P.today_str() + "\n")
+            f.write(data_string)
+            f.flush()
+            f.close()
+            print("written")
+
+    print("loaded string")
+
+    # Find and go to today's date in schedule
+    P.str = P.str[1:]
+    P.move_to(P.today_str())
+    P.count = 0    
     Blocks = []
     
     other_classes = []
@@ -42,22 +71,6 @@ def index(request, _day = '0', ref = 0):
         if inspect.ismodule(value):
             other_classes.append(value)
 
-    P = OrNahParser(data_string, today)
-    print("loaded string")
-    # Find and go to today's date in schedule
-    try:
-        assert P.str.count(P.today_str()) == 1
-    except AssertionError:
-        if ref > 2:
-            print("failed.")
-
-            return fail(request)
-        else:
-            print("retrying...")
-            return fail1(request)
-
-    P.move_to(P.today_str())
-    P.count = 0
 
     # Get index for tomorrow schedule
     try:
@@ -95,11 +108,16 @@ def index(request, _day = '0', ref = 0):
     SortedBlocks.finalize(today, other_classes)
     data["SortedBlocks"] = SortedBlocks
 
+    for b in SortedBlocks.classes:
+        print(b.name)
+
     curr = SortedBlocks.get_current()
     data["curr"] = curr
 
     curr_list = SortedBlocks.curr_list()
     data["curr_list"] = curr_list
+    for b in curr_list:
+        print(b.name)
 
     return render_to_response('index.jade', data, context)
 

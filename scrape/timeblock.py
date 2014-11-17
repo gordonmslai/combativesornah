@@ -23,9 +23,12 @@ class TimeBlock:
         return minutes
     def time_til(self):
         time = self.now
+        print(self.now)
+        print(self.start)
         if self.start > time:
             t = self.start - time
             minutes = t.seconds / 60
+            print(minutes)
             return minutes
         return 0
     def time_left(self):
@@ -165,14 +168,15 @@ class BlockList:
         if rsf_yest.end > twelve:
             new = TimeBlock(twelve, rsf_yest.end, "No reservation")
             blocks.append(new)
-            new = TimeBlock(rsf_yest.end, rsf.start, "-- RSF CLOSED --")
-            blocks.append(new)
         return blocks
 
     def closed_block(self, openhours, day):
         rsf = openhours
         rsf_tom = others.Others([rsfhours], day + datetime.timedelta(days = 1))
+        print(rsf_tom.day.weekday())
         rsf_tom = rsf_tom.create_block(rsfhours)
+        print(rsf_tom.time_til())
+
         return TimeBlock(rsf.end, rsf_tom.start, "-- RSF CLOSED --")
     
     #Add other classes to Block Tree
@@ -195,10 +199,13 @@ class BlockList:
     def finalize(self, day, _others):
         rsf = others.Others([rsfhours], day)
         rsf = rsf.create_block(rsfhours)
-        for b in self.start_blocks(rsf, day):
-            self.add(b)
-        self.add(self.closed_block(rsf, day))
         for b in self.others_blocks(day, _others):
             self.add(b)
+        
+        for b in self.start_blocks(rsf, day):
+            self.add(b)
+        
+        self.add(self.closed_block(rsf, day))
+
         for b in self.get_free_blocks():
             self.add(b)

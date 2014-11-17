@@ -57,7 +57,6 @@ class OrNahParser:
         obj = self.day
         obj = obj.replace(hour = hr, minute = m, second = 0, microsecond = 0)
         return obj
-
 # if curr.reserved:
 #     print("Nah...")
 # elif curr.reserved == False:
