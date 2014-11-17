@@ -13,7 +13,7 @@ from scrape import OrNahParser
 
 
 # Create your views here.
-def index(request, _day, ref = 0):
+def index(request, _day = 0, ref = 0):
     print("started...")
     context = RequestContext(request)
     data = {}
