@@ -35,6 +35,17 @@ h1, h3 {
   z-index: 0;
 
 }
+#container2 {
+  display: table;
+  position: absolute;
+  width: 550px;
+  left: 50%;
+  margin-left: -275px;
+  top: 15%;
+  z-index = 10;
+  background-color: white;
+  margin-bottom: 70px;
+}
 
 #container {
   display: table;
@@ -86,7 +97,7 @@ h1, h3 {
 
 fblock_main {
   display: block;
-  margin: 4px;
+
 }
 
 fblock_d {
@@ -157,6 +168,11 @@ fblock_d {
 fblock {
   display:table;
   width: 100%;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 1px 0px 5px 0.5px #888888;
 }
 
 /*
