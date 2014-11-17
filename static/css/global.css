@@ -12,6 +12,13 @@ h1, h3 {
   margin: 0;
 }
 
+#ct {
+  position: absolute;
+  font-size: 75%;
+  margin: 6px;
+  color:gray;
+
+}
 #bg {
   position: fixed; 
   top: 0;

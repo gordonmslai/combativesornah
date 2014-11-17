@@ -23,15 +23,18 @@ html(lang='en')
             }
             function display_ct() {
                 var strcount;
-                var x = new Date();
-                document.getElementById("ct").innerHTML = x;
+                var a = new Date();
+                var x = a.toDateString();
+                document.getElementById("ct").innerHTML = "<h3>" + x;
                 tt=display_c();
             }
             
             function display_ct1() {
                 var hours = Math.floor(window.start / 3600);
-                var minutes = Math.floor((window.start - (hours *3600 ))/60 + 1);
-                var tr = String(minutes) + " minutes";
+                var minutes = Math.floor((window.start - (hours *3600 ))/60);
+                var seconds = Math.floor((window.start - (hours *3600) - (minutes * 60)));
+
+                var tr = String(minutes) + " minutes " + String(seconds) + " seconds";
                 if (hours != 0) {
                     tr = String(hours) + " hours " + tr;
                 }
@@ -46,10 +49,10 @@ html(lang='en')
                 display_c1({{curr.time_left_sec}});
             }
     body(onload = "time_stuff();")
-        span#ct
         #bg
             img(src='{% static "gordon.jpg" %}', alt = '')
         #container
+            spac#ct
             #title
                 h3 Combatives Or Nah?
             #ornah
