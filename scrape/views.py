@@ -47,6 +47,7 @@ def index(request, _day = '0', ref = 0):
     # Find and go to today's date in schedule
     try:
         assert P.str.count(P.today_str()) == 1
+        assert 0 == 1
     except AssertionError:
         if ref > 2:
             print("failed.")
