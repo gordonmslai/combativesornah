@@ -31,7 +31,7 @@ h1, h3 {
   margin: auto; 
   min-width: 100%;
   height: 100%;
-  opacity: 0.5;
+  opacity: 0.6;
   z-index: 0;
 
 }
@@ -57,8 +57,16 @@ h1, h3 {
   z-index = 10;
   background-color: white;
   margin-bottom: 70px;
-  box-shadow: 10px 10px 15px #888888;
 }
+
+#backcont {
+  width: 100%;
+  position: absolute;
+  z-index = -80;
+  height: 95%;
+  box-shadow: 0px 27px 50px 15px #888888;
+}
+
 
 #container #title {
   text-align:right;
@@ -106,6 +114,7 @@ fblock_d {
 
 #upcoming {
   display: table;
+  position: relative;
   text-align: center;
   background-color: #eee;
   width: 100%;
@@ -161,6 +170,7 @@ fblock_d {
 }
 
 #endnotes {
+  display: block;
   font-size: 75%;
   margin: 3px;
 }
