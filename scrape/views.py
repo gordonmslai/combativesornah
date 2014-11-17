@@ -20,7 +20,6 @@ def index(request, _day = '0', ref = 0):
     
     today = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
 
-    print(today.time())
     
     if int(_day) != 0:
         today = today + datetime.timedelta(days = int(_day))
@@ -48,14 +47,16 @@ def index(request, _day = '0', ref = 0):
     # Find and go to today's date in schedule
     try:
         assert P.str.count(P.today_str()) == 1
-        # assert 0 == 1
+        assert 0 == 1
     except AssertionError:
         if ref > 2:
+            print(P.str)
+            print("failed.")
+
             return fail(request)
         else:
-            print("Schedule could not be accessed at this time. Please check again in 10 minutes.")
-            # return refresh(request)
-            return index2(request, ref+1)
+            print("retrying...")
+            return index2(request, ref + 1)
 
     P.move_to(P.today_str())
     P.count = 0
@@ -127,6 +128,12 @@ def refresh(request):
 
 
     return render_to_response('refresh.jade', data, context)
+
+def fail1(request):
+    context = RequestContext(request)
+    data = {}
+
+    return render_to_response('fail1.jade', data, context)
 
 def fail(request):
     context = RequestContext(request)

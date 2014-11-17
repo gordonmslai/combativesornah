@@ -1,0 +1,44 @@
+{% load staticfiles %}
+doctype html
+html(lang='en')
+    head
+        title Combatives Or Nah?
+        link(rel='stylesheet', href='{% static "css/global.css" %}', type='text/css')
+        script.
+            function display_c() {
+                var refresh=500;
+                mytime=setTimeout('display_ct()', refresh);
+            }
+
+            function display_ct() {
+                var strcount;
+                var x = ". ";
+                var e = document.getElementById("load");
+                if (e.innerHTML != ". . . ") {
+                    e.innerHTML = e.innerHTML + x;
+                }
+                else {
+                    e.innerHTML = "";
+                }
+                e.style.fontSize = "300%";
+                tt=display_c();
+            }
+            
+
+            function time_stuff() {
+                display_ct();
+
+            }
+
+    body(onload = "time_stuff();")
+        #container
+            center
+                h1 On his way to the RSF, Gordon couldn't resist picking up some Chipotle. 
+                br
+                br
+                h1 He might take a little longer. Sorry.
+                #load
+
+    meta(http-equiv="refresh", content="0;URL=/index/")
+
+
