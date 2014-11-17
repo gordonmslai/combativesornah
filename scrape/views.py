@@ -49,7 +49,6 @@ def index(request, _day = '0', ref = 0):
         assert P.str.count(P.today_str()) == 1
     except AssertionError:
         if ref > 2:
-            print(P.str)
             print("failed.")
 
             return fail(request)
