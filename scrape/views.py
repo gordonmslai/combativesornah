@@ -13,7 +13,7 @@ from scrape import OrNahParser
 
 
 # Create your views here.
-def index(request, _day = '0', ref = 0):
+def index(request, _day, ref = 0):
     print("started...")
     context = RequestContext(request)
     data = {}
@@ -113,8 +113,10 @@ def index(request, _day = '0', ref = 0):
 
     curr = SortedBlocks.get_current()
     data["curr"] = curr
-
-    curr_list = SortedBlocks.curr_list()
+    if curr == None:
+        curr_list = SortedBlocks.classes
+    else:
+        curr_list = SortedBlocks.curr_list()
     data["curr_list"] = curr_list
     for b in curr_list:
         print(b.name)

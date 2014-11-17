@@ -79,9 +79,9 @@ class TimeBlock:
         string = ""
         string += self.name
         string += "\n"
-        string += startend_str
+        string += str(self.start)
         string += "\n"
-        string += ("(" + self.to_str(self.duration()) + ")")
+        string += str(self.end)
         string += "\n"
         return string
     
