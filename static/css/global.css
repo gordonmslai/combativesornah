@@ -1,5 +1,10 @@
+@font-face {
+    font-family: myFont;
+    src: url("Cicle Semi.ttf");
+}
+
 body {
-  font-family: helvetica;
+  font-family: myFont;
 }
 
 h1, h3 {
@@ -34,6 +39,7 @@ h1, h3 {
   z-index = 10;
   background-color: white;
   margin-bottom: 70px;
+  box-shadow: 10px 10px 15px #888888;
 }
 
 #container #title {

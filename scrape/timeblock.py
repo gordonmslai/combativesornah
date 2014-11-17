@@ -78,11 +78,8 @@ class TimeBlock:
     def __str__(self):
         string = ""
         string += self.name
-        string += "\n"
         string += str(self.start)
-        string += "\n"
         string += str(self.end)
-        string += "\n"
         return string
     
     def start_str(self):
