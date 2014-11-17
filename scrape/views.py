@@ -50,12 +50,12 @@ def index(request, _day = '0', ref = 0):
         assert P.str.count(P.today_str()) == 1
         # assert 0 == 1
     except AssertionError:
-        if ref > 0:
+        if ref > 2:
             return fail(request)
         else:
             print("Schedule could not be accessed at this time. Please check again in 10 minutes.")
             # return refresh(request)
-            return index2(request)
+            return index2(request, ref+1)
 
     P.move_to(P.today_str())
     P.count = 0
@@ -134,8 +134,8 @@ def fail(request):
 
     return render_to_response('fail.jade', data, context)
 
-def index2(request):
-    return index(request, ref = 1)
+def index2(request, _ref):
+    return index(request, ref = _ref)
 
 def loading(request):
     context = RequestContext(request)
