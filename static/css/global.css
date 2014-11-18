@@ -126,9 +126,20 @@ h1, h3 {
 #container #main {
   display: table;
   text-align: center;
+  position: absolute;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6), gray, rgba(0, 0, 0, 0.3), gray, rgba(0, 0, 0, 0.6));
   width: 100%;
+  height: 75px;
+  background: url("/static/wood2.jpg");
+  opacity: 0.75;
+  background-size: 130%;
+}
 
+#mainholder {
+  display: block;
+  text-align: center;
+  width: 100%;
+  z-index: 100;
 }
 
 fblock_main {
@@ -162,6 +173,7 @@ fblock_d {
   margin-left: 5px;
 }
 
+
 #uptitles {
   height: 28px;
 }
@@ -193,8 +205,9 @@ fblock_d {
   top: 10px;
 }
 #curr_remain {
-  margin-top: 10px;
+  margin-top: 3px;
   margin-bottom: 15px;
+  font-size: 75%;
 }
 
 #endnotes {
