@@ -48,15 +48,20 @@ html(lang='en')
                 d = d.getDay();
                 var nd = d + {{dayspast}};
                 if (nd <= 6) {
-                    var s = '<form name="input" action="/index/{{dayspast}}" method="GET"><input type="submit" value="Next Day" class="btn"></form>';
+                    var s = '<form name="input" action="/index/{{dayspast}}" method="GET"><input type="submit" value="Next Day\'s\n Schedule" class="btn"></form>';
                     document.getElementById("buttonnext").innerHTML = s;
                 }
-                
                 var pd = d + {{daysprev}};
                 if (pd >= 0) {
-                    var s = '<form name="input" action="/index/{{daysprev}}" method="GET"><input type="submit" value="Previous Day" class="btn"></form>';
+                    var s = '<form name="input" action="/index/{{daysprev}}" method="GET"><input type="submit" value="Previous Day\'s\n Schedule" class="btn"></form>';
                     document.getElementById("buttonprev").innerHTML = s;
                 }
+                var s = "{{curr}}";
+                if (s == "None") {
+                    var s = '<form name="input" action="/index" method="GET"><input type="submit" value="Jump to Current" class="btn_curr"></form>';
+                        document.getElementById("buttonnow").innerHTML = s;
+                }
+
             }
 
             function time_stuff() {
@@ -70,12 +75,13 @@ html(lang='en')
     #bg
         img(src='{% static "gordon.jpg" %}', alt = '')
     body(onload = "time_stuff();")
-        #buttcont    
-            #buttonnext
-            #buttonprev
         #container
+            #buttcont  
+                #buttonnext
+                #buttonprev
             #backcont
             spac#ct
+            #buttonnow  
             #title
                 h3 Combatives Or Nah?
             #ornah

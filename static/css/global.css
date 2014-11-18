@@ -292,9 +292,30 @@ fblock {
   left: calc(50% - 200px - 290px);
   z-index: 200;
 }
+#buttonnow {
 
+}
 #buttcont {
   display: table;
   margin-right: auto;
   margin-left: auto;  
 }
+
+.btn_curr {
+  display: inline-block;
+  color: #666;
+  background-color: rgba(255,255,255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 10px;
+  width: 150px;
+  height: 25px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.1);
+  position: absolute;
+  left: calc(50% - 75px);
+  top: 1.5px;
+}
+
