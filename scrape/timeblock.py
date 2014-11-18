@@ -157,7 +157,6 @@ class BlockList:
         rsf_yest= rsf_yest.create_block(rsfhours)
         earliest = self.get_earliest()
         blocks = []
-        blocks.append(self.closed_block(rsf_yest, day - datetime.timedelta(days = 1)))
         if rsf.start < earliest.start:
             new = TimeBlock(rsf.start, earliest.start, "No reservation")
             blocks.append(new)
@@ -165,6 +164,7 @@ class BlockList:
         if rsf_yest.end > twelve:
             new = TimeBlock(twelve, rsf_yest.end, "No reservation")
             blocks.append(new)
+            blocks.append(self.closed_block(rsf_yest, day - datetime.timedelta(days = 1)))
         return blocks
 
     def closed_block(self, openhours, day):
