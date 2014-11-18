@@ -48,9 +48,9 @@ html(lang='en')
                 display_ct();
                 display_c1({{curr.time_left_sec}});
             }
+    #bg
+        img(src='{% static "gordon.jpg" %}', alt = '')
     body(onload = "time_stuff();")
-        #bg
-            img(src='{% static "gordon.jpg" %}', alt = '')
         #container
             #backcont
             spac#ct
