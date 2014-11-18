@@ -100,6 +100,12 @@ h1, h3 {
   width: 100%;
 }
 
+#schedule {
+  display: table;
+  background-color: rgb(70, 70, 70);
+  width: 100%;
+}
+
 #ornah2 {
   display: table;
   background-color: rgb(255, 255, 255);
@@ -227,46 +233,16 @@ fblock {
   box-shadow: 2px 0px 5px 0.25px #888888;
 }
 
-/*
-#main #division {
-  width: 100%;
-  float: left;
-  text-align: center;
-  background-color: #a0a0a0;
-  font-weight: 100;
-}
-
-#main #division #donors {
-  float: left;
-  width: calc(50% - 0.5px);
-  background-color: white;
-}
-
-#main #division #donors #logo, #main #division #charities #logo{
-  margin-top: 12px;
-  margin-bottom: 12px;
-}
-
-#main #division #donors #logo img, #main #division #charities #logo img {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-}
-
-#main #division #charities {
-  float: right;
-  width: calc(50% - 0.5px);
-  background-color: white;
-}
 
 .btn {
   display: inline-block;
   color: #666;
-  background-color: #eee;
+  background-color: rgba(255,255,255, 0.5);
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 12px;
-  padding: 10px 30px;
+  width: 200px;
+  height: 50px;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -275,8 +251,9 @@ fblock {
 }
 
 .btn:hover {
-  background-color: #e3e3e3;
-  border-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255, 0.7);
+  border-color: rgba(0,0,0, 0.3);
+
 }
 
 .btn:active {
@@ -299,4 +276,25 @@ fblock {
 .btn.btn-red:active {
   background-color: #B32C24;
   border-color: rgba(0,0,0,0.9);
-}*/
+}
+
+#buttonnext, #buttonprev {
+  position: fixed;
+  top: calc(50% - 25px);
+}
+
+#buttonnext {
+  right: calc(50% - 200px - 290px);
+  z-index: 200;
+}
+
+#buttonprev {
+  left: calc(50% - 200px - 290px);
+  z-index: 200;
+}
+
+#buttcont {
+  display: table;
+  margin-right: auto;
+  margin-left: auto;  
+}

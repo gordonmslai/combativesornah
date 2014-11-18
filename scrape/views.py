@@ -26,10 +26,13 @@ def index(request, _day = 0, ref = 0):
 
     f = open("string.db")
     P = OrNahParser(f.read(), today)
-
     print(today.weekday())
+
     if today.weekday() == 6:
-        if f.readline() != P.today_str():     
+        f.seek(0,0)
+        _date = f.readline()[:len(P.today_str())]
+        if _date != P.today_str():
+            print("openurl")
             url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
             
             tree = html.parse(url)
@@ -120,6 +123,12 @@ def index(request, _day = 0, ref = 0):
     data["curr_list"] = curr_list
     for b in curr_list:
         print(b.name)
+
+    data["date"] = calendar.day_name[today.weekday()] + ", " + P.today_str()
+
+    data["dayspast"] = int(_day) + 1
+
+    data["daysprev"] = int(_day) - 1
 
     return render_to_response('index.jade', data, context)
 

@@ -43,34 +43,63 @@ html(lang='en')
                 window.start= window.start- 1;
                 tt1=display_c1(window.start);
             }
+            function showbuttons() {
+                var d = new Date();
+                d = d.getDay();
+                var nd = d + {{dayspast}};
+                if (nd <= 6) {
+                    var s = '<form name="input" action="/index/{{dayspast}}/" method="POST"><input type="hidden" name="csrfmiddlewaretoken" 
+                        value="VsnoeoOXRDQ7SmZTf4P2Uvj0ruVO7utC"><input type="submit" value="Next Day" class="btn"></form>';
+                    document.getElementById("buttonnext").innerHTML = s;
+                }
+                
+                var pd = d + {{daysprev}};
+                if (pd >= 0) {
+                    var s = '<form name="input" action="/index/{{daysprev}}/" method="POST"><input type="hidden" name="csrfmiddlewaretoken" 
+                        value="VsnoeoOXRDQ7SmZTf4P2Uvj0ruVO7utC"><input type="submit" value="Previous Day" class="btn"></form>';
+                    document.getElementById("buttonprev").innerHTML = s;
+                }
+            }
 
             function time_stuff() {
+                showbuttons();
                 display_ct();
-                display_c1({{curr.time_left_sec}});
+                var a = "{{curr}}";
+                if (a != "None") {
+                    display_c1({{curr.time_left_sec}});
+                }
             }
     #bg
         img(src='{% static "gordon.jpg" %}', alt = '')
     body(onload = "time_stuff();")
+        #buttcont    
+            #buttonnext
+            #buttonprev
         #container
             #backcont
             spac#ct
             #title
                 h3 Combatives Or Nah?
             #ornah
-                if curr.reserved
-                    #nah
-                        h1 ...............Nah............... :(
+                if curr
+                    if curr.reserved
+                        #nah
+                            h1 ...............Nah............... :(
+                    else
+                        #yes
+                            #yes_str
+                                h1 YAAAAAAAAAAAAAAAAAS. :)
                 else
-                    #yes
-                        #yes_str
-                            h1 YAAAAAAAAAAAAAAAAAS. :)
+                    #schedule
+                        h2 Schedule for {{date}}
             #main
             #mainholder
                 #title_curr
                     b Currently..
-                #curr_name 
-                    u {{ curr.name }}
-                    #curr_remain
+                if curr
+                    #curr_name 
+                        u {{ curr.name }}
+                        #curr_remain
             br
             br
             #upcoming
