@@ -48,15 +48,13 @@ html(lang='en')
                 d = d.getDay();
                 var nd = d + {{dayspast}};
                 if (nd <= 6) {
-                    var s = '<form name="input" action="/index/{{dayspast}}/" method="POST"><input type="hidden" name="csrfmiddlewaretoken" 
-                        value="VsnoeoOXRDQ7SmZTf4P2Uvj0ruVO7utC"><input type="submit" value="Next Day" class="btn"></form>';
+                    var s = '<form name="input" action="/index/{{dayspast}}" method="GET"><input type="submit" value="Next Day" class="btn"></form>';
                     document.getElementById("buttonnext").innerHTML = s;
                 }
                 
                 var pd = d + {{daysprev}};
                 if (pd >= 0) {
-                    var s = '<form name="input" action="/index/{{daysprev}}/" method="POST"><input type="hidden" name="csrfmiddlewaretoken" 
-                        value="VsnoeoOXRDQ7SmZTf4P2Uvj0ruVO7utC"><input type="submit" value="Previous Day" class="btn"></form>';
+                    var s = '<form name="input" action="/index/{{daysprev}}" method="GET"><input type="submit" value="Previous Day" class="btn"></form>';
                     document.getElementById("buttonprev").innerHTML = s;
                 }
             }
