@@ -14,6 +14,8 @@ class Others:
         hr = int(hr)
         if _str[-2:] == "PM" and hr != 12:
             hr += 12
+        if _str[-2:] == "AM" and hr == 12:
+            hr = 0
         m = int(_str[-5:-3])
         obj = self.day
         obj = obj.replace(hour = hr, minute = m, second = 0, microsecond = 0)
