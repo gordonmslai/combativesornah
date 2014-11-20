@@ -119,7 +119,6 @@ def index(request, _day = 0, ref = 0):
     data["curr"] = curr
     if int(_day) != 0:
         data["curr"] = None    
-    if curr == None:
         curr_list = SortedBlocks.classes
     else:
         curr_list = SortedBlocks.curr_list()
