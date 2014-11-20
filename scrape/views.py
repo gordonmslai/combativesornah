@@ -115,7 +115,10 @@ def index(request, _day = 0, ref = 0):
         print(b.name)
 
     curr = SortedBlocks.get_current()
+
     data["curr"] = curr
+    if int(_day) != 0:
+        data["curr"] = None    
     if curr == None:
         curr_list = SortedBlocks.classes
     else:
