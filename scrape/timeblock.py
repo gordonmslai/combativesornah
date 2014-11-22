@@ -165,6 +165,9 @@ class BlockList:
             new = TimeBlock(twelve, rsf_yest.end, "No reservation")
             blocks.append(new)
             blocks.append(self.closed_block(rsf_yest, day - datetime.timedelta(days = 1)))
+        if rsf_yest.end < twelve:
+            new = TimeBlock(rsf_yest.end, rsf.start, "-- RSF CLOSED --")
+            blocks.append(new)
         return blocks
 
     def closed_block(self, openhours, day):
