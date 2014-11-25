@@ -29,6 +29,8 @@ def index(request, _day = 0, ref = 0):
     print(today.weekday())
 
     if today.weekday() == 6:
+        openurl();
+    def openurl():
         f.seek(0,0)
         _date = f.readline()[:len(P.today_str())]
         if _date != P.today_str():
@@ -62,40 +64,17 @@ def index(request, _day = 0, ref = 0):
             print("written")
 
     print("loaded string")
-    try:
-        print(P.str)
-        assert P.str.count(P.today_str()) == 1
-    except AssertionError:
-        print("openurl")
-        url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
-        
-        tree = html.parse(url)
-        root = tree.getroot()
-
-        for child in root:
-            if child.tag == "body":
-                pointer = child
-                break
-
-        data_string = root.text_content()
-        P = OrNahParser(data_string, today)
-        try:
-            assert P.str.count(P.today_str()) == 1
-        except AssertionError:
-            if ref > 2:
-                print("failed.")
-                return fail(request)
-            else:
-                print("retrying...")
-                return fail1(request)            
-        f = open("string.db", "w")
-        f.write(P.today_str() + "\n")
-        f.write(data_string)
-        f.flush()
-        f.close()
-        print("written")
     # Find and go to today's date in schedule
     P.str = P.str[1:]
+    try:
+        assert P.str.count(P.today_str()) == 1
+    except AssertionError:
+        openurl()
+    # f = open("string.db", "w")
+    # f.write(P.str)
+    # f.flush()
+    # f.close()
+    # print("written")
     P.move_to(P.today_str())
     P.count = 0    
     Blocks = []
