@@ -28,8 +28,6 @@ def index(request, _day = 0, ref = 0):
     P = OrNahParser(f.read(), today)
     print(today.weekday())
 
-    if today.weekday() == 6:
-        openurl();
     def openurl():
         f.seek(0,0)
         _date = f.readline()[:len(P.today_str())]
@@ -62,6 +60,8 @@ def index(request, _day = 0, ref = 0):
             f.flush()
             f.close()
             print("written")
+    if today.weekday() == 6:
+        openurl();
 
     print("loaded string")
     # Find and go to today's date in schedule
