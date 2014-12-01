@@ -28,10 +28,10 @@ def index(request, _day = 0, ref = 0):
     P = OrNahParser(f.read(), today)
     print(today.weekday())
 
-    def openurl():
-        f.seek(0,0)
-        _date = f.readline()[:len(P.today_str())]
-        if _date != P.today_str():
+    def openurl(_str, _parser, today):
+        _str.seek(0,0)
+        _date = _str.readline()[:len(_parser.today_str())]
+        if _date != _parser.today_str():
             print("openurl")
             url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
             
@@ -60,8 +60,12 @@ def index(request, _day = 0, ref = 0):
             f.flush()
             f.close()
             print("written")
+        else:
+            P = OrNahParser(_str.read(), today)
+        return P
     if today.weekday() == 6:
-        openurl();
+        print("potential rewrite")
+        P = openurl(f, P, today)
 
     print("loaded string")
     # Find and go to today's date in schedule
@@ -69,7 +73,7 @@ def index(request, _day = 0, ref = 0):
     try:
         assert P.str.count(P.today_str()) == 1
     except AssertionError:
-        openurl()
+        P = openurl(f, P, today)
     # f = open("string.db", "w")
     # f.write(P.str)
     # f.flush()
