@@ -6,7 +6,7 @@ from lxml import etree, html
 from urllib2 import urlopen
 import re, sys, inspect
 import datetime, calendar
-import classes
+import classes, classes.fencingdecal
 import rsfhours, others, timeblock
 from scrape import OrNahParser
 
@@ -85,8 +85,10 @@ def index(request, _day = 0, ref = 0):
     
     other_classes = []
     for name, value in inspect.getmembers(classes):
+        print(name)
         if inspect.ismodule(value):
             other_classes.append(value)
+    print(other_classes)
 
 
     # Get index for tomorrow schedule
