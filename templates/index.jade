@@ -101,9 +101,13 @@ html(lang='en')
                 #title_curr
                     b Currently..
                 if curr
+                    #wrong
+                        a(href = "https://docs.google.com/forms/d/1COtzgo0xohCq2cUC3piOYiDt3pG5VyII7y2jK2na1SQ/viewform?usp=send_form", target="_blank", class = "btn_w")
+                            p Is this wrong?
                     #curr_name 
                         u {{ curr.name }}
                         #curr_remain
+
             br
             br
             #upcoming
@@ -142,10 +146,12 @@ html(lang='en')
                             document.getElementById("{{ class.web_str }}{{class.time_til}}").appendChild(e2);
 
                 #endnotes
-                    a(href = "http://recsports.berkeley.edu/fitness-wellness/group-exercise/weekly-schedule/")
-                        p Link to full RSF Group X Weekly Schedule
                     br
-                    | Current factored classes: 
-                    | Cal Fencing, Archery Club, Calstar Yoga Decal, Fencing Decal, All RSF Group X Classes 
+                    u Current factored classes:
+                    br 
+                    | Cal Fencing - Archery Club - Calstar Yoga Decal 
                     br
-                    | Please email gordonmslai@gmail.com for bugs/class additions/etc. Thank you!
+                    | Fencing Decal - Taekwondo Club - All RSF Group X Classes 
+                    br
+                    br
+                    b Please email gordonmslai@gmail.com for bugs/class additions/etc. Thank you!

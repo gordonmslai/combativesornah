@@ -136,7 +136,7 @@ h1, h3 {
   position: absolute;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6), gray, rgba(0, 0, 0, 0.3), gray, rgba(0, 0, 0, 0.6));
   width: 100%;
-  height: 75px;
+  height: 100px;
   background: url("/static/wood2.jpg");
   opacity: 0.75;
   background-size: 130%;
@@ -209,12 +209,19 @@ fblock_d {
 #curr_name {
   position: relative;
   font-size: 150%;
-  top: 10px;
+  top: -20px;
 }
 #curr_remain {
   margin-top: 3px;
   margin-bottom: 15px;
   font-size: 75%;
+}
+
+#wrong {
+  margin-top: 3px;
+  font-size: 75%;
+  text-align: right;
+  position: relative;
 }
 
 #endnotes {
@@ -250,7 +257,23 @@ fblock {
   border-bottom-width: 3px;
 }
 
-.btn:hover {
+.btn_w {
+  display: inline-block;
+  color: #666;
+  background-color: rgba(255,255,255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  width: 120px;
+  height: 35px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-bottom-width: 3px;
+  text-align: center;
+}
+.btn:hover, .btn_w:hover {
   background-color: rgba(255,255,255, 0.7);
   border-color: rgba(0,0,0, 0.3);
 
