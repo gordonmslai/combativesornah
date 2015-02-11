@@ -6,7 +6,7 @@ from lxml import etree, html
 from urllib2 import urlopen
 import re, sys, inspect
 import datetime, calendar
-import classes, classes.fencingdecal
+import classes, classes.fencingdecal, classes.taekwondo
 import rsfhours, others, timeblock
 from scrape import OrNahParser
 
