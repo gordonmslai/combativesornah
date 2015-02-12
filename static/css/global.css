@@ -272,6 +272,7 @@ fblock {
   border: 1px solid rgba(0,0,0,0.3);
   border-bottom-width: 3px;
   text-align: center;
+  font-weight: bold;
 }
 .btn:hover, .btn_w:hover {
   background-color: rgba(255,255,255, 0.7);
