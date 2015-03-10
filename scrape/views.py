@@ -19,7 +19,7 @@ def index(request, _day = 0, ref = 0):
     data = {}
     
 
-    today = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
+    today = datetime.datetime.utcnow() - datetime.timedelta(hours = 7)
     
     if int(_day) != 0:
         today = today + datetime.timedelta(days = int(_day))
