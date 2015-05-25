@@ -84,10 +84,10 @@ def index(request, _day = 0, ref = 0):
     Blocks = []
     
     other_classes = []
-    for name, value in inspect.getmembers(classes):
-        print(name)
-        if inspect.ismodule(value):
-            other_classes.append(value)
+    # for name, value in inspect.getmembers(classes):
+    #     print(name)
+    #     if inspect.ismodule(value):
+    #         other_classes.append(value)
     print(other_classes)
 
 
