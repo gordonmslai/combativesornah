@@ -99,10 +99,11 @@ def index(request, _day = 0, ref = 0):
 
     while P.count < next_day:
         # Check for Combatives
-        a = str('combatives_rsf\\" s')
+        a = str('combatives_rsf \\')
         try:
             P.move_to(a)
         except ValueError:
+            print("could not find a pattern")
             break
         if P.count > next_day:
             break
