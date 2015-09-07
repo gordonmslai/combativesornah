@@ -3,7 +3,10 @@ doctype html
 html(lang='en')
     head
         title Combatives Or Nah?
+        link(rel='stylesheet', href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
         link(rel='stylesheet', href='{% static "css/global.css" %}', type='text/css')
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
+        script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
         script.
             function display_c() {
                 var refresh=1000;
@@ -25,7 +28,7 @@ html(lang='en')
                 var strcount;
                 var a = new Date();
                 var x = a.toDateString();
-                document.getElementById("ct").innerHTML = "<h3>" + x;
+                document.getElementById("ct").innerHTML = "<h4>" + x;
                 tt=display_c();
             }
             
@@ -73,37 +76,26 @@ html(lang='en')
                 }
             }
     #bg
-        img(src='{% static "gordon.jpg" %}', alt = '')
     body(onload = "time_stuff();")
         include analytics.html
-        |Updated 2/13/15: 
-        br
-        |-- Extended Sp15 Cal Fencing Hours (Thur)
-        br
-        |Updated 2/10/15: 
-        br
-        |-- Added Sp15 Taekwondo Club (TuThur)
-        br
-        |-- Added Error Report link
-        br
-        |Updated 3/10/15: 
-        br
-        |-- Daylight Saving Time Starts
-        br
-        |Updated 5/25/15:
-        br
-        |-- Fixed RSF Group X classes not appearing.
-        br
-        |-- Adjusted for summer.
+        #updates.alert.alert-info.fade.in
+            a(href="#", class="close", data-dismiss="alert", aria-label="close")
+                &times;
+            strong
+                |Last Updated {{update_date}}:
+            for x in update_desc
+                br
+                |{{x}}
         #container
             #buttcont  
                 #buttonnext
                 #buttonprev
             #backcont
-            spac#ct
-            #buttonnow  
             #title
-                h3 Combatives Or Nah?
+                #ct
+                #name
+                    h4 Combatives Or Nah?
+                #buttonnow  
             #ornah
                 if curr
                     if curr.reserved
@@ -112,24 +104,22 @@ html(lang='en')
                     else
                         #yes
                             #yes_str
-                                h1 YAAAAAAAAAAAAAAAAAS. :)
+                                h1 :)
                 else
                     #schedule
                         h2 Schedule for {{date}}
-            #main
-            #mainholder
-                #title_curr
-                    b Currently..
-                if curr
+            if curr
+                #main
+                    img(src="/static/wood2.jpg")
+                    #title_curr
+                        b Currently..
                     #wrong
                         a(href = "https://docs.google.com/forms/d/1COtzgo0xohCq2cUC3piOYiDt3pG5VyII7y2jK2na1SQ/viewform?usp=send_form", target="_blank", class = "btn_w")
-                            p Is this wrong?
+                            p(style="transform: translate(0,50%);") Is this wrong?
                     #curr_name 
-                        u {{ curr.name }}
+                        u(style="font-weight: bold") {{ curr.name }}
                         #curr_remain
 
-            br
-            br
             #upcoming
                 #uptitles
                     #title2

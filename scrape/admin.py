@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Reservation, CombativesUser, OpenHours
+from .models import Reservation, CombativesUser, OpenHours, Update
 
 
 class ReservationInline(admin.TabularInline):
@@ -24,3 +24,9 @@ class OpenHoursInline(admin.TabularInline):
 @admin.register(OpenHours)
 class OpenHoursAdmin(admin.ModelAdmin):
     inlines = [OpenHoursInline]
+
+
+@admin.register(Update)
+class UpdateAdmin(admin.ModelAdmin):
+    ordering = ('-date_updated',)
+    list_display = ('date_updated',)

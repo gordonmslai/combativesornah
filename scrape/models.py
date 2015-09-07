@@ -34,3 +34,8 @@ class CombativesUser(models.Model):
 
 class OpenHours(models.Model):
     pass
+
+
+class Update(models.Model):
+    date_updated = models.DateField()
+    updates = models.TextField()

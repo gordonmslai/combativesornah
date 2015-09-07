@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from datetime import datetime, timedelta
 import timeblock
-from models import Reservation
+from models import Reservation, Update
 
 
 def index(request, _day=0, ref=0):
@@ -43,6 +43,11 @@ def index(request, _day=0, ref=0):
     data["dayspast"] = int(_day) + 1
 
     data["daysprev"] = int(_day) - 1
+
+
+    last_update = Update.objects.latest('date_updated')
+    data["update_date"] = last_update.date_updated.strftime("%b %d %Y") 
+    data["update_desc"] = last_update.updates.split('\n') 
 
     return render_to_response('index.jade', data, context)
 
