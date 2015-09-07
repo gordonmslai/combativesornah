@@ -48,17 +48,17 @@ html(lang='en')
                 d = d.getDay();
                 var nd = d + {{dayspast}};
                 if (nd <= 6) {
-                    var s = '<form name="input" action="/index/{{dayspast}}" method="GET"><input type="submit" value="Next Day\'s\n Schedule" class="btn"></form>';
+                    var s = '<form name="input" action="/{{dayspast}}" method="GET"><input type="submit" value="Next Day\'s\n Schedule" class="btn"></form>';
                     document.getElementById("buttonnext").innerHTML = s;
                 }
                 var pd = d + {{daysprev}};
                 if (pd >= 0) {
-                    var s = '<form name="input" action="/index/{{daysprev}}" method="GET"><input type="submit" value="Previous Day\'s\n Schedule" class="btn"></form>';
+                    var s = '<form name="input" action="/{{daysprev}}" method="GET"><input type="submit" value="Previous Day\'s\n Schedule" class="btn"></form>';
                     document.getElementById("buttonprev").innerHTML = s;
                 }
                 var s = "{{curr}}";
                 if (s == "None") {
-                    var s = '<form name="input" action="/index" method="GET"><input type="submit" value="Jump to Current" class="btn_curr"></form>';
+                    var s = '<form name="input" action="/" method="GET"><input type="submit" value="Jump to Current" class="btn_curr"></form>';
                         document.getElementById("buttonnow").innerHTML = s;
                 }
 
@@ -154,8 +154,7 @@ html(lang='en')
 
                             var e = document.createElement("fblock_main");
                             e.id = "{{ class.web_str }}{{class.time_til}}";
-                            e.innerHTML = "<i>{{ class.name }}<i/><br/>
-                                {{ class.startend_str }}";
+                            e.innerHTML = "<i>{{ class.name }}<i/><br/>{{ class.startend_str }}";
                             document.getElementById("{{ class.web_str}}{{class.name}}{{class.time_til}}").appendChild(e);
                             
                             var e2 = document.createElement("fblock_d");
