@@ -1,141 +1,36 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 from django.template import RequestContext
+from datetime import datetime, timedelta
+import timeblock
+from models import Reservation
 
 
-from lxml import etree, html
-from urllib2 import urlopen
-import re, sys, inspect
-import datetime, calendar
-import classes, classes.fencingdecal, classes.taekwondo
-import rsfhours, others, timeblock
-from scrape import OrNahParser
-
-
-
-# Create your views here.
-def index(request, _day = 0, ref = 0):
-    print("started...")
+def index(request, _day=0, ref=0):
+    print "DAY: " + str(_day)
     context = RequestContext(request)
     data = {}
-    
 
-    today = datetime.datetime.utcnow() - datetime.timedelta(hours = 7)
-    
+    today = datetime.now()
     if int(_day) != 0:
-        today = today + datetime.timedelta(days = int(_day))
+        today = today + timedelta(days=int(_day))
 
-    f = open("string.db")
-    P = OrNahParser(f.read(), today)
-    print(today.weekday())
-
-    def openurl(_str, _parser, today):
-        _str.seek(0,0)
-        _date = _str.readline()[:len(_parser.today_str())]
-        if _date != _parser.today_str():
-            print("openurl")
-            url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
-            
-            tree = html.parse(url)
-            root = tree.getroot()
-
-            for child in root:
-                if child.tag == "body":
-                    pointer = child
-                    break
-
-            data_string = root.text_content()
-            P = OrNahParser(data_string, today)
-            try:
-                assert P.str.count(P.today_str()) == 1
-            except AssertionError:
-                if ref > 2:
-                    print("failed.")
-                    return fail(request)
-                else:
-                    print("retrying...")
-                    return fail1(request)            
-            f = open("string.db", "w")
-            f.write(P.today_str() + "\n")
-            f.write(data_string)
-            f.flush()
-            f.close()
-            print("written")
-        else:
-            P = OrNahParser(_str.read(), today)
-        return P
-    if today.weekday() == 6:
-        print("potential rewrite")
-        P = openurl(f, P, today)
-
-    print("loaded string")
-    # Find and go to today's date in schedule
-    P.str = P.str[1:]
-    try:
-        assert P.str.count(P.today_str()) == 1
-    except AssertionError:
-        P = openurl(f, P, today)
-    # f = open("string.db", "w")
-    # f.write(P.str)
-    # f.flush()
-    # f.close()
-    # print("written")
-    P.move_to(P.today_str())
-    P.count = 0    
+    classes = Reservation.objects.filter(day_num=today.date().weekday(), user__isnull=False)
     Blocks = []
-    
-    other_classes = []
-    # for name, value in inspect.getmembers(classes):
-    #     print(name)
-    #     if inspect.ismodule(value):
-    #         other_classes.append(value)
-    print(other_classes)
-
-
-    # Get index for tomorrow schedule
-    try:
-        next_day = P.str.index("hc_date\\"[:])
-    except ValueError:
-        next_day = len(P.str)
-
-    while P.count < next_day:
-        # Check for Combatives
-        a = str('combatives_rsf \\')
-        try:
-            P.move_to(a)
-        except ValueError:
-            print("could not find a pattern")
-            break
-        if P.count > next_day:
-            break
-        # Find and go to class
-        start = P.get_time(0)
-        end = P.get_time(1)
-
-        # Get name of class
-        try:
-            m = re.search('>(?!.*>.*\(Combatives, RSF\)).*(?=\(Combatives, RSF\))', P.str[:P.str.index(a[:])])
-        except ValueError:
-            m = re.search('>(?!.*>.*\(Combatives, RSF\)).*(?=\(Combatives, RSF\))', P.str[:len(P.str)-1])
-        name = m.group(0)[1:]
-
-        # Add block to BlockTree
-        new_block = timeblock.TimeBlock(P.time_obj(start), P.time_obj(end), name)
+    for c in classes:
+        start = c.get_start_dt(today.date())
+        end = c.get_end_dt(today.date())
+        new_block = timeblock.TimeBlock(start, end, c.user.name)
         Blocks.append(new_block)
 
-
-    #DATA
-    SortedBlocks = timeblock.BlockList(Blocks)
-    SortedBlocks.finalize(today, other_classes)
+    # DATA
+    SortedBlocks = timeblock.BlockList(Blocks, today)
+    SortedBlocks.finalize()
     data["SortedBlocks"] = SortedBlocks
-
-    for b in SortedBlocks.classes:
-        print(b.name)
-
     curr = SortedBlocks.get_current()
 
     data["curr"] = curr
     if int(_day) != 0:
-        data["curr"] = None    
+        data["curr"] = None
         curr_list = SortedBlocks.classes
     else:
         curr_list = SortedBlocks.curr_list()
@@ -143,7 +38,7 @@ def index(request, _day = 0, ref = 0):
     for b in curr_list:
         print(b.name)
 
-    data["date"] = calendar.day_name[today.weekday()] + ", " + P.today_str()
+    data["date"] = today.strftime("%a %b %d %Y")
 
     data["dayspast"] = int(_day) + 1
 
@@ -151,44 +46,6 @@ def index(request, _day = 0, ref = 0):
 
     return render_to_response('index.jade', data, context)
 
-def refresh(request):
-    context = RequestContext(request)
-    data = {}
-
-    # url = urlopen("https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js")
-
-    # tree = html.parse(url)
-    # root = tree.getroot()
-
-    # for child in root:
-    #     if child.tag == "body":
-    #         pointer = child
-    #         break
-
-    # data_string = root.text_content()
-    # Blocks = []
-    # today = datetime.datetime.today()
-    # other_classes = [fencing, calstaryoga]
-    
-    # P = OrNahParser(data_string)
-
-
-    return render_to_response('refresh.jade', data, context)
-
-def fail1(request):
-    context = RequestContext(request)
-    data = {}
-
-    return render_to_response('fail1.jade', data, context)
-
-def fail(request):
-    context = RequestContext(request)
-    data = {}
-
-    return render_to_response('fail.jade', data, context)
-
-def index2(request, _ref):
-    return index(request, ref = _ref)
 
 def loading(request):
     context = RequestContext(request)
