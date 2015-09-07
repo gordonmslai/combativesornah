@@ -48,17 +48,17 @@ html(lang='en')
                 d = d.getDay();
                 var nd = d + {{dayspast}};
                 if (nd <= 6) {
-                    var s = '<form name="input" action="/index/{{dayspast}}" method="GET"><input type="submit" value="Next Day\'s\n Schedule" class="btn"></form>';
+                    var s = '<form name="input" action="/{{dayspast}}" method="GET"><input type="submit" value="Next Day\'s\n Schedule" class="btn"></form>';
                     document.getElementById("buttonnext").innerHTML = s;
                 }
                 var pd = d + {{daysprev}};
                 if (pd >= 0) {
-                    var s = '<form name="input" action="/index/{{daysprev}}" method="GET"><input type="submit" value="Previous Day\'s\n Schedule" class="btn"></form>';
+                    var s = '<form name="input" action="/{{daysprev}}" method="GET"><input type="submit" value="Previous Day\'s\n Schedule" class="btn"></form>';
                     document.getElementById("buttonprev").innerHTML = s;
                 }
                 var s = "{{curr}}";
                 if (s == "None") {
-                    var s = '<form name="input" action="/index" method="GET"><input type="submit" value="Jump to Current" class="btn_curr"></form>';
+                    var s = '<form name="input" action="/" method="GET"><input type="submit" value="Jump to Current" class="btn_curr"></form>';
                         document.getElementById("buttonnow").innerHTML = s;
                 }
 
@@ -75,6 +75,26 @@ html(lang='en')
     #bg
         img(src='{% static "gordon.jpg" %}', alt = '')
     body(onload = "time_stuff();")
+        include analytics.html
+        |Updated 2/13/15: 
+        br
+        |-- Extended Sp15 Cal Fencing Hours (Thur)
+        br
+        |Updated 2/10/15: 
+        br
+        |-- Added Sp15 Taekwondo Club (TuThur)
+        br
+        |-- Added Error Report link
+        br
+        |Updated 3/10/15: 
+        br
+        |-- Daylight Saving Time Starts
+        br
+        |Updated 5/25/15:
+        br
+        |-- Fixed RSF Group X classes not appearing.
+        br
+        |-- Adjusted for summer.
         #container
             #buttcont  
                 #buttonnext
@@ -101,9 +121,13 @@ html(lang='en')
                 #title_curr
                     b Currently..
                 if curr
+                    #wrong
+                        a(href = "https://docs.google.com/forms/d/1COtzgo0xohCq2cUC3piOYiDt3pG5VyII7y2jK2na1SQ/viewform?usp=send_form", target="_blank", class = "btn_w")
+                            p Is this wrong?
                     #curr_name 
                         u {{ curr.name }}
                         #curr_remain
+
             br
             br
             #upcoming
@@ -130,8 +154,7 @@ html(lang='en')
 
                             var e = document.createElement("fblock_main");
                             e.id = "{{ class.web_str }}{{class.time_til}}";
-                            e.innerHTML = "<i>{{ class.name }}<i/><br/>
-                                {{ class.startend_str }}";
+                            e.innerHTML = "<i>{{ class.name }}<i/><br/>{{ class.startend_str }}";
                             document.getElementById("{{ class.web_str}}{{class.name}}{{class.time_til}}").appendChild(e);
                             
                             var e2 = document.createElement("fblock_d");
@@ -142,10 +165,12 @@ html(lang='en')
                             document.getElementById("{{ class.web_str }}{{class.time_til}}").appendChild(e2);
 
                 #endnotes
-                    a(href = "http://recsports.berkeley.edu/fitness-wellness/group-exercise/weekly-schedule/")
-                        p Link to full RSF Group X Weekly Schedule
                     br
-                    | Current factored classes: 
-                    | Cal Fencing, Archery Club, Calstar Yoga Decal, All RSF Group X Classes 
+                    u Current factored classes:
+                    br 
+                    | Cal Fencing - Archery Club - Calstar Yoga Decal 
                     br
-                    | Please email gordonmslai@gmail.com for bugs/class additions/etc. Thank you!
+                    | Fencing Decal - Taekwondo Club - All RSF Group X Classes 
+                    br
+                    br
+                    b Please email gordonmslai@gmail.com for bugs/class additions/etc. Thank you!

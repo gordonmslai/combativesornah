@@ -1,20 +1,9 @@
-#Scrape data from RSF Weekly Schedule website: http://recsports.berkeley.edu/fitness-wellness/group-exercise/weekly-schedule/
-# https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js <----credit to kevin
-
-from lxml import etree, html
-from urllib2 import urlopen
-
 import re
-import timeblock
-import datetime, calendar
-from classes import fencing, calstaryoga, archery
-import rsfhours
-import others
-import sys
-
+import calendar
 
 
 class OrNahParser:
+    """Scrape data from RSF Weekly Schedule website: http://recsports.berkeley.edu/fitness-wellness/group-exercise/weekly-schedule/ using this URL: https://www.healcode.com/widgets/mb/schedules/cp32621nhv.js <----credits to Kevin Lin"""
 
     def __init__(self, string, day):
         self.str = string
@@ -35,9 +24,16 @@ class OrNahParser:
         self.count += index
         return self.str
 
-    # Returns string indicating time of first instance of 
+    # Returns new substring of _STR starting at INDEX
+    # and increments COUNT
+    def move_by(self, index):
+        self.str = self.str[index:]
+        self.count += index
+        return self.str
+
+    # Returns string indicating time of first instance of
     # either starttime or endtime -- use 0 or 1 to get those respectively
-    def get_time(self, start = 0):
+    def get_time(self, start=0):
         if start == 0:
             self.move_to("hc_starttime")
         else:
@@ -55,19 +51,5 @@ class OrNahParser:
             hr += 12
         m = int(_str[-5:-3])
         obj = self.day
-        obj = obj.replace(hour = hr, minute = m, second = 0, microsecond = 0)
+        obj = obj.replace(hour=hr, minute=m, second=0, microsecond=0)
         return obj
-# if curr.reserved:
-#     print("Nah...")
-# elif curr.reserved == False:
-#     print("YAS")
-# print(" ")
-# print("-- Currently --")
-# print(" ")
-# print(curr.name)
-# print("Time remaining: " + curr.to_str(curr.time_left()))
-# print(" ") 
-# print("-- Upcoming --")
-# print(" ")
-
-# print(SortedBlocks.__str__(index + 1))
