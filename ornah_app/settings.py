@@ -41,8 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scrape',
-    'djcelery',
-    'kombu.transport.django',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,9 +103,3 @@ TEMPLATE_LOADERS = (
         'django.template.loaders.app_directories.Loader',
     )),
 )
-
-# CELERY CONFIG
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = 'django://'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'

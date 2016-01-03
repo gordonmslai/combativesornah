@@ -2,15 +2,22 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from datetime import datetime, timedelta
 import timeblock
-from models import Reservation, Update
+import tasks
+from models import Reservation, Update, WeeklyDatabaseUpdate
 
 
 def index(request, _day=0, ref=0):
-    print "DAY: " + str(_day)
     context = RequestContext(request)
     data = {}
-
     today = datetime.now()
+    # Update Database
+    update_log = WeeklyDatabaseUpdate.objects.all()[0]
+    if today.date().weekday() == 6 and update_log.last_updated != today.date(): 
+        print("UPDATING DATABASE")
+        tasks.scrape()
+        update_log.last_updated = today.date()
+        update_log.save()
+    print "DAY: " + str(_day)
     if int(_day) != 0:
         today = today + timedelta(days=int(_day))
 
@@ -44,10 +51,9 @@ def index(request, _day=0, ref=0):
 
     data["daysprev"] = int(_day) - 1
 
-
     last_update = Update.objects.latest('date_updated')
-    data["update_date"] = last_update.date_updated.strftime("%b %d %Y") 
-    data["update_desc"] = last_update.updates.split('\n') 
+    data["update_date"] = last_update.date_updated.strftime("%b %d %Y")
+    data["update_desc"] = last_update.updates.split('\n')
 
     return render_to_response('index.jade', data, context)
 

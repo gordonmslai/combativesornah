@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from celery import shared_task
 from scrape.models import Reservation, CombativesUser
 from scrape.scrape import OrNahParser
 from datetime import datetime
@@ -8,14 +7,11 @@ from urllib2 import urlopen
 import re
 
 
-@shared_task
 def clear_non_scraped():
     Reservation.objects.filter(user__is_scraped=False).delete()
 
 
-@shared_task
 def scrape():
-    print "Task started"
     count = 0
     while (count < 3):
         P = get_parser()
@@ -40,10 +36,12 @@ def get_parser():
 
 
 def clear_reservations():
+    print("CLEARING ALL SCRAPED RESERVATIONS")
     Reservation.objects.filter(user__is_scraped=True).delete()
 
 
 def get_reservations(P):
+    print("GETTING NEW RESERVATIONS")
     weekday = 6
 
     def get_next_day_loc():
@@ -58,13 +56,13 @@ def get_reservations(P):
         P.count = 0
         next_day = get_next_day_loc()
         # Check for Combatives
-        a = str('combatives_rsf \\')
+        a = str('combatives_rsf  \\')
         try:
             P.move_to(a)
         except ValueError:
-            print("could not find a pattern")
+            print("could not find 'combatives_rsf  \\'")
             break
-        if P.count > next_day:
+        if P.count > next_day:  # ATTENTION If gone into the "next day" (NEEDS FIX/Test)
             weekday += 1
             continue
 
@@ -74,7 +72,7 @@ def get_reservations(P):
 
         # Get name of class
         try:
-            m = re.search('>(?!.*>.*\(Combatives, RSF\)).*(?=\(Combatives, RSF\))', P.str[:P.str.index(a[:])])
+            m = re.search('>(?!.*>.*\(Combatives, RSF\)).*(?=\(Combatives, RSF\))', P.str[:P.str.index(a)])  # Search for class before next instance of "combatives_rsf  \"
         except ValueError:
             m = re.search('>(?!.*>.*\(Combatives, RSF\)).*(?=\(Combatives, RSF\))', P.str[:len(P.str) - 1])
         name = m.group(0)[1:]

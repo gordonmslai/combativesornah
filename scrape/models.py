@@ -39,3 +39,7 @@ class OpenHours(models.Model):
 class Update(models.Model):
     date_updated = models.DateField()
     updates = models.TextField()
+
+class WeeklyDatabaseUpdate(models.Model):
+    last_updated = models.DateField()
+
