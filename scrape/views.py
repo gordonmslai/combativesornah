@@ -12,7 +12,8 @@ def index(request, _day=0, ref=0):
     today = datetime.now()
     # Update Database
     update_log = WeeklyDatabaseUpdate.objects.all()[0]
-    if today.date().weekday() == 6 and update_log.last_updated != today.date(): 
+    # if today.date().weekday() == 6 and update_log.last_updated != today.date(): 
+    if True: #QUICKFIX
         print("UPDATING DATABASE")
         tasks.scrape()
         update_log.last_updated = today.date()
